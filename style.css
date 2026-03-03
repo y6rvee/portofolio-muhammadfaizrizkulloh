@@ -121,8 +121,11 @@ button:hover {
 
 .hero-btns {
     display: flex;
-    gap: 15px; /* Jarak antar tombol */
-    margin-top: 20px;
+    gap: 15px; 
+    margin-top: 30px;
+    justify-content: center; /* Ini akan menarik tombol ke tengah secara horizontal */
+    align-items: center;     /* Ini memastikan tombol sejajar secara vertikal */
+    width: 100%;             /* Memastikan kontainer mengambil lebar penuh */
 }
 
 /* Base style untuk semua tombol di Hero */
@@ -142,7 +145,7 @@ button:hover {
     background: #00ffcc;
     color: #000;
     box-shadow: 0 0 15px rgba(0, 255, 204, 0.3);
-    margin-left: 30%;
+    
 }
 
 /* Tombol Sekunder (Kontak Saya) */
@@ -312,15 +315,26 @@ button:hover {
     width: 100%;
 }
 
+.hero-image {
+    display: flex;
+    justify-content: center; /* Memastikan foto tetap di tengah kontainer */
+    align-items: center;
+    max-width: 45%; /* Tambahkan ini agar kontainer foto tidak terlalu lebar di desktop */
+    width: 100%;
+    flex-shrink: 0;
+}
+
 .hero-image img {
-    width: 500px; /* Sedikit lebih lebar agar proporsional */
-    height: 620px; 
-    object-fit: cover;
-    border-radius: 50px; /* Kotak dengan sudut halus (modern) */
+    width: 100%;          /* Foto akan mengisi lebar kontainernya (.hero-image) */
+    max-width: 380px;      /* Tentukan lebar maksimal foto agar tidak terlalu besar di layar lebar */
+    height: auto;         /* Kunci agar tinggi foto menyesuaikan secara proporsional */
+    object-fit: cover;    /* Pertahankan agar foto tetap memenuhi area dengan rapi */
+    
+    /* Properti lain biarkan saja */
+    border-radius: 50px;
     border: 4px solid #00ffcc;
     box-shadow: 0 0 25px rgba(0, 255, 204, 0.2);
-    transition: transform 0.3s ease; /* Tambahan agar ada efek saat di-hover */
-    flex-shrink: 0;
+    transition: transform 0.3s ease;
 }
 
 /* Efek interaktif saat foto disentuh kursor */
@@ -932,6 +946,9 @@ button:hover {
     color: #fff;
     font-weight: 500;
     margin: 0;
+    /* Tambahkan baris di bawah ini */
+    word-break: break-all; /* Memaksa teks panjang pecah ke baris baru */
+    font-size: 0.9rem;     /* Sedikit diperkecil agar lebih pas di HP */
 }
 
 /* Hover Effect */
@@ -961,6 +978,21 @@ button:hover {
     font-size: 1.1rem;
     cursor: pointer;
 }
+
+.menu-toggle {
+    display: none; /* Sembunyikan di desktop */
+    flex-direction: column;
+    cursor: pointer;
+    gap: 5px;
+}
+
+.menu-toggle .bar {
+    width: 25px;
+    height: 3px;
+    background-color: #00ffcc;
+    transition: all 0.3s ease;
+}
+
 /* Update untuk tampilan Mobile agar foto pindah ke atas teks */
 @media (max-width: 768px) {
     .full-screen {
@@ -996,11 +1028,109 @@ button:hover {
     }
 
     .hero-btns {
+        flex-direction: row; /* Tetap berjejer ke samping, atau 'column' jika ingin tumpuk atas-bawah */
         justify-content: center;
-        flex-direction: column; /* Tombol tumpuk ke bawah di layar sangat kecil */
-        align-items: center;
+        gap: 10px;
     }
     .btn-main {
-        margin-right: 120px;
+        justify-content: center;
+        text-align: center;
+        
     }
+    .contact-card {
+        padding: 15px;      /* Kurangi padding agar ruang teks lebih luas */
+        gap: 12px;          /* Kurangi jarak antara ikon dan teks */
+        flex-direction: row; /* Pastikan ikon tetap di samping teks */
+        align-items: center;
+        width: 100%;        /* Pastikan kartu mengambil lebar penuh container */
+    }
+
+    .contact-info {
+        text-align: left;   /* Pastikan teks tetap rata kiri */
+        overflow: hidden;   /* Mencegah konten meluap keluar */
+    }
+    .menu-toggle {
+        display: flex;
+        z-index: 1100; /* Pastikan lebih tinggi dari nav-links */
+        position: relative;
+    }
+
+    .nav-links {
+        position: fixed;
+        top: -110%; /* Sembunyikan jauh di atas */
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        background: rgba(0, 0, 0, 0.98); /* Lebih gelap agar teks jelas */
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        transition: 0.5s ease-in-out;
+        z-index: 1000;
+        visibility: hidden; /* Tambahkan ini agar tidak bisa diklik saat sembunyi */
+    }
+
+    .nav-links.active {
+        top: 0;
+        visibility: visible; /* Munculkan saat aktif */
+    }
+
+    .nav-links li {
+        margin: 20px 0;
+    }
+    
+    /* Animasi Hamburger jadi (X) saat aktif */
+    .menu-toggle.is-active .bar:nth-child(2) { opacity: 0; }
+    .menu-toggle.is-active .bar:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+    .menu-toggle.is-active .bar:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+
+    .logo {
+        z-index: 1100;
+        position: relative;
+    }
+
+    /* 2. Sembunyikan menu secara default */
+    .nav-links {
+        position: fixed !important;
+        top: -100vh !important; /* Benar-benar di luar layar atas */
+        left: 0 !important;
+        width: 100% !important;
+        height: 100vh !important;
+        background: rgba(0, 0, 0, 0.98) !important;
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: center !important;
+        align-items: center !important;
+        transition: 0.4s ease-in-out !important;
+        z-index: 9998 !important; /* Di bawah tombol hamburger sedikit */
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    /* 3. Class ini akan dipicu oleh JavaScript */
+    .nav-links.active {
+        top: 0 !important; /* Muncul menutupi layar */
+    }
+
+    .nav-links li {
+        margin: 15px 0 !important;
+        margin-left: 0 !important;
+    }
+
+    /* 4. Pastikan hamburger ada di paling depan */
+    .menu-toggle {
+        display: flex !important;
+        z-index: 9999 !important; /* Angka sangat tinggi */
+        position: relative !important;
+        cursor: pointer !important;
+    }
+
+    .navbar {
+        padding: 15px 5% !important;
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+    }
+
 }
