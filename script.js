@@ -1,3 +1,13 @@
+const menu = document.querySelector('#mobile-menu'); 
+const menuLinks = document.querySelector('.nav-links');
+
+if (menu && menuLinks) {
+    menu.onclick = () => {
+        menu.classList.toggle('is-active');
+        menuLinks.classList.toggle('active');
+    };
+}
+
 window.addEventListener('scroll', function() {
     const nav = document.querySelector('.navbar');
     if (window.scrollY > 80) {
@@ -7,11 +17,6 @@ window.addEventListener('scroll', function() {
         nav.style.padding = '20px 10%';
         nav.style.background = 'rgba(0, 0, 0, 0.7)';
     }
-});
-
-const tombol = document.getElementById('btnSapa');
-tombol.addEventListener('click', function() {
-    window.location.href = "mailto:muhammadfaizrizkulloh12@gmail.com";
 });
 
 // Data Portofolio (Bisa kamu tambah sesuai keinginan)
